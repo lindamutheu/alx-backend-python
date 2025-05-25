@@ -5,7 +5,7 @@ import time
 def with_db_connection(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        conn = sqlite3.connect("alx-airbnb-database.db")  # Update with your database path if needed
+        conn = sqlite3.connect("users.db")  # Update with your database path if needed
         try:
             return func(conn, *args, **kwargs)
         finally:
