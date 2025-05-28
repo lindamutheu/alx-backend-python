@@ -62,6 +62,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+              
             ],
         },
     },
@@ -97,6 +98,22 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+
+      {
+        'NAME': 'rest_framework.authentication.SessionAuthentication',
+    },
+
+  {
+        'NAME': 'rest_framework.permissions.IsAuthenticated',
+    },
+
+    {
+        'NAME': ' DEFAULT_AUTHENTICATION_CLASSES',
+    },
+
+   
+   
+      
 ]
 
 
