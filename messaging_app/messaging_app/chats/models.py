@@ -1,5 +1,6 @@
 import uuid
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
 # Create your models here.
@@ -20,7 +21,7 @@ class users (models.Model):
     
          def __str__(self):
       
-            return f"{self.first_name} {self.last_name}"
+            return f"{self.user_id} {self.email} {self.password_hash} {self.phone_number} {self.role} {self.created_at}{self.first_name} {self.last_name}"
 
 
 # Conversations model
