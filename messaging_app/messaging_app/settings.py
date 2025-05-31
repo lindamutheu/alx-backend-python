@@ -97,6 +97,16 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    {
+        'NAME': 'rest_framework.permissions.IsAuthenticated',
+    },
+      {
+        'NAME': 'DEFAULT_AUTHENTICATION_CLASSES',
+    },
+     {
+        'NAME': 'rest_framework.authentication.SessionAuthentication',
+
+    },
 ]
 
 
