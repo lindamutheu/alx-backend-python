@@ -14,14 +14,14 @@ CREATE TABLE IF NOT EXISTS users (
     email TEXT UNIQUE NOT NULL,
     password_hash TEXT NOT NULL,
     phone_number TEXT,
-    role TEXT NOT NULL,
+    role TEXT NOT NULL
 )
 """)
 
 # Insert some sample data
 cursor.executemany("""
 INSERT OR REPLACE INTO users (user_id, first_name, last_name, email, password_hash, phone_number, role)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+VALUES (?, ?, ?, ?, ?, ?, ?)
 """, [
     ('b8f2d6d5-1e25-44d0-a881-5b20e05c6121', 'Linda', 'Musyei', 'linds.host@example.com', 'hashed_pw1', '+254712345678', 'host'),
     ('c3eeb74b-7dc9-47b8-b8c6-fcc4fa8933cd', 'James', 'Kembo', 'james.guest@example.com', 'hashed_pw2', '+254700987654', 'guest'),
