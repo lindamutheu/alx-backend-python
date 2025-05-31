@@ -11,9 +11,11 @@ class User(AbstractUser):
         HOST = 'host', 'Host'
         ADMIN = 'admin', 'Admin'
 
-    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)  # renamed from 'id'
-    email = models.EmailField(unique=True)  # explicitly defined to match checker
-    password = models.CharField(max_length=128)  # included for checker, although inherited
+    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=128)
+    first_name = models.CharField(max_length=150, blank=True)  # <-- explicitly defined
+    last_name = models.CharField(max_length=150, blank=True)   # <-- explicitly defined
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     role = models.CharField(max_length=10, choices=Role.choices, default=Role.GUEST)
     created_at = models.DateTimeField(auto_now_add=True)
