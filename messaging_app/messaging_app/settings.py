@@ -126,7 +126,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
     },
     
-    
+      {
+        'NAME': 'rest_framework.authentication.BasicAuthentication',
+
+    },
 ]
 
 
