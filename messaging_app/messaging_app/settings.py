@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'rest_framework',
+    'rest_framework_simplejwt',
+    'django_filters',
     'django.contrib.staticfiles',
 ]
 
@@ -107,6 +109,24 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'rest_framework.authentication.SessionAuthentication',
 
     },
+
+     {
+        'NAME': 'rest_framework_simplejwt.authentication.JWTAuthentication',
+
+    },
+    
+
+       {
+        'NAME': 'rest_framework.pagination.PageNumberPagination',
+
+    },
+
+      {
+        'NAME': 'django_filters.rest_framework.DjangoFilterBackend',
+
+    },
+    
+    
 ]
 
 
