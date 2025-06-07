@@ -1,123 +1,199 @@
-	
-info	
-_postman_id	"e8f5d7d8-13e2-4ac8-b25f-641f19387dc8"
-name	"post_man-Collections"
-schema	"https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-_exporter_id	"19969034"
-item	
-0	{ name: "Login - Get JWT Token", request: {…}, response: [] }
-1	
-name	"Refresh JWT Token"
-request	
-method	"POST"
-header	
-0	
-key	"Content-Type"
-value	"application/json"
-body	
-mode	"raw"
-raw	'{\n    "refresh": "{{refresh_token}}"\n}'
-url	
-raw	"{{base_url}}/api/token/refresh"
-host	
-0	"{{base_url}}"
-path	
-0	"api"
-1	"token"
-2	"refresh"
-response	[]
-2	
-name	"Create Conversation"
-request	
-method	"POST"
-header	
-0	
-key	"Content-Type"
-value	"application/json"
-1	
-key	"Authorization"
-value	"Bearer {{access_token}}"
-body	
-mode	"raw"
-raw	'{\n    "title": "Test Chat",\n    "participants": [\n        2\n    ]\n}'
-url	
-raw	"{{base_url}}/api/conversations"
-host	
-0	"{{base_url}}"
-path	
-0	"api"
-1	"conversations"
-response	[]
-3	
-name	"Send Message"
-request	
-method	"POST"
-header	
-0	
-key	"Content-Type"
-value	"application/json"
-1	
-key	"Authorization"
-value	"Bearer {{access_token}}"
-body	
-mode	"raw"
-raw	'{\n    "content": "Hello, how are you?"\n}'
-url	
-raw	"{{base_url}}/api/conversations/1/send_message"
-host	
-0	"{{base_url}}"
-path	
-0	"api"
-1	"conversations"
-2	"1"
-3	"send_message"
-response	[]
-4	
-name	"Get Conversations"
-request	
-method	"GET"
-header	
-0	
-key	"Authorization"
-value	"Bearer {{access_token}}"
-url	
-raw	"{{base_url}}/api/conversations"
-host	
-0	"{{base_url}}"
-path	
-0	"api"
-1	"conversations"
-response	[]
-5	
-name	"Get Messages by Conversation"
-request	
-method	"GET"
-header	
-0	
-key	"Authorization"
-value	"Bearer {{access_token}}"
-url	
-raw	"{{base_url}}/api/messages?conversation_id=1"
-host	
-0	"{{base_url}}"
-path	
-0	"api"
-1	"messages"
-query	
-0	
-key	"conversation_id"
-value	"1"
-response	[]
-6	
-name	"Unauthorized - No Token"
-request	
-method	"GET"
-header	[]
-url	
-raw	"{{base_url}}/api/conversations"
-host	
-0	"{{base_url}}"
-path	
-0	"api"
-1	"conversations"
-response	[]
+{
+	"info": {
+		"_postman_id": "e8f5d7d8-13e2-4ac8-b25f-641f19387dc8",
+		"name": "post_man-Collections",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19969034"
+	},
+	"item": [
+		{
+			"name": "Login - Get JWT Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"your_username\",\n    \"password\": \"your_password\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/token",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh JWT Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"refresh\": \"{{refresh_token}}\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/token/refresh",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"token",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Conversation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Test Chat\",\n    \"participants\": [\n        2\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/conversations",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"conversations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Message",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"content\": \"Hello, how are you?\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/conversations/1/send_message",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"conversations",
+						"1",
+						"send_message"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Conversations",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/conversations",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"conversations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Messages by Conversation",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/messages?conversation_id=1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"messages"
+					],
+					"query": [
+						{
+							"key": "conversation_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unauthorized - No Token",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/conversations",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"conversations"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
