@@ -84,7 +84,7 @@ MIDDLEWARE = [
     'Django-Middleware-0x03.middleware.RequestLoggingMiddleware', #week 5
     'messaging_app.middleware.RequestLoggingMiddleware',  
     'chats.middleware.RestrictAccessByTimeMiddleware',
-    'chats.middleware.RequestLoggingMiddlewar', #week 5
+    'chats.middleware.RequestLoggingMiddleware', #week 5
     'django.middleware.security.SecurityMiddleware', #week 5
     'django.contrib.sessions.middleware.SessionMiddleware', #week 5
     'Django-Middleware-0x03.middleware.RequestLoggingMiddleware', #week 5
