@@ -84,6 +84,8 @@ MIDDLEWARE = [
     'Django-Middleware-0x03.middleware.RequestLoggingMiddleware',
     'messaging_app.middleware.RequestLoggingMiddleware',
     'messaging_app.middleware.RequestLoggingMiddleware',
+     'messaging_app.middleware.RequestLoggingMiddleware',
+    'messaging_app.middleware.RestrictAccessByTimeMiddleware',
 ]
 
 ROOT_URLCONF = 'messaging_app.urls'
