@@ -81,13 +81,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'Django-Middleware-0x03.middleware.RequestLoggingMiddleware',
+    'Django-Middleware-0x03.middleware.RequestLoggingMiddleware', #week 5
     'messaging_app.middleware.RequestLoggingMiddleware',  
     'chats.middleware.RestrictAccessByTimeMiddleware',
-    'Django-Middleware-0x03.middleware.RequestLoggingMiddleware',
-    'Django-Middleware-0x03.middleware.RestrictAccessByTimeMiddleware',
-    'Django-Middleware-0x03.middleware.OffensiveLanguageMiddleware',
-    'Django-Middleware-0x03.middleware.RolePermissionMiddleware',
+    'chats.middleware.RequestLoggingMiddlewar', #week 5
+    'django.middleware.security.SecurityMiddleware', #week 5
+    'django.contrib.sessions.middleware.SessionMiddleware', #week 5
+    'Django-Middleware-0x03.middleware.RequestLoggingMiddleware', #week 5
+    'Django-Middleware-0x03.middleware.RestrictAccessByTimeMiddleware', #week 5
+    'Django-Middleware-0x03.middleware.OffensiveLanguageMiddleware', #week 5
+    'Django-Middleware-0x03.middleware.RolePermissionMiddleware', #week 5
 ]
 
 ROOT_URLCONF = 'messaging_app.urls'
