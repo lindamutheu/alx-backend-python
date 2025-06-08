@@ -81,7 +81,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-     'messaging_app.middleware.RequestLoggingMiddleware',
+    'Django-Middleware-0x03.middleware.RequestLoggingMiddleware',
+    'messaging_app.middleware.RequestLoggingMiddleware',
+    'messaging_app.middleware.RequestLoggingMiddleware',
 ]
 
 ROOT_URLCONF = 'messaging_app.urls'
@@ -169,6 +171,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 
 ]
+
+AUTH_USER_MODEL = 'chats.User'
 
 
 # Internationalization
