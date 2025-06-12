@@ -13,8 +13,19 @@ class Message(models.Model):
     edited_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='edited_messages')  # Who edited it
 
 
+
+
+
+    parent_message = models.ForeignKey(
+        'self',
+        null=True,
+        blank=True,
+        related_name='replies',
+        on_delete=models.CASCADE
+    )
+
     def __str__(self):
-        return f"From {self.sender.username} to {self.receiver.username} at {self.timestamp}"
+        return f"From {self.sender.username} to {self.receiver.username} to {self.content[:30]} at {self.timestamp}"
 
 
 class MessageHistory(models.Model):
