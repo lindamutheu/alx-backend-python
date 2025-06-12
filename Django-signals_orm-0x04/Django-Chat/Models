@@ -5,3 +5,17 @@ def message_detail(request, message_id):
         'message': message,
         'history': history
     })
+
+
+def edit_message(request, pk):
+    message = get_object_or_404(Message, pk=pk)
+
+    if request.method == 'POST':
+        new_content = request.POST.get('content')
+        if new_content and new_content != message.content:
+            message.content = new_content
+            message.edited_by = request.user
+            message.save()
+        return redirect('message_detail', pk=pk)
+
+    return render(request, 'messaging/edit_message.html', {'message': message})
