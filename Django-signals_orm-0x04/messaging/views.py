@@ -91,7 +91,12 @@ def send_message(request):
 
 @login_required
 def unread_inbox(request):
-    unread_messages = Message.unread.for_user(request.user)
+    # the custom manager method
+    unread_messages = Message.unread.unread_for_user(request.user)
+
+    #  .only() is already applied inside the manager, but shown here explicitly if needed:
+    # unread_messages = unread_messages.only('id', 'sender', 'content', 'timestamp')
+
     return render(request, 'messaging/unread_inbox.html', {
         'unread_messages': unread_messages
     })

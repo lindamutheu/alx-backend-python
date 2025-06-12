@@ -11,3 +11,11 @@ def delete_user(request):
         user.delete()
         return redirect('account_deleted')  # or home page
     return render(request, 'account/confirm_delete.html')
+
+@login_required
+def read_message(request, message_id):
+    message = get_object_or_404(Message, pk=message_id, receiver=request.user)
+    if not message.read:
+        message.read = True
+        message.save(update_fields=['read'])  # Efficient update
+    return render(request, 'messaging/message_detail.html', {'message': message})
