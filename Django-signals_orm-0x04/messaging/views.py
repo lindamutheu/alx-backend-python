@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Message
 from django.db.models import Prefetch
 from .utils import get_threaded_replies
+from django.views.decorators.cache import cache_page
 
 @login_required
 def delete_user(request):
@@ -99,4 +100,19 @@ def unread_inbox(request):
 
     return render(request, 'messaging/unread_inbox.html', {
         'unread_messages': unread_messages
+    })
+
+
+# Cache this view for 60 seconds
+@cache_page(60)
+@login_required
+def conversation_view(request, user_id):
+    messages = Message.objects.filter(
+        sender=request.user, receiver__id=user_id
+    ).union(
+        Message.objects.filter(sender__id=user_id, receiver=request.user)
+    ).select_related('sender', 'receiver').order_by('timestamp')
+
+    return render(request, 'messaging/conversation.html', {
+        'messages': messages
     })
