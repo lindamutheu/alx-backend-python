@@ -11,12 +11,23 @@ class Message(models.Model):
     edited = models.BooleanField(default=False)  # week 6 task one (Add an edited Boolean field to indicate if a message was modified.)
     edited_at = models.DateTimeField(null=True, blank=True)  # When it was last edited
     edited_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='edited_messages')  # Who edited it
+    read = models.BooleanField(default=False)
 
 
 
+class UnreadMessagesManager(models.Manager):
+    def for_user(self, user):
+        return self.get_queryset().filter(receiver=user, read=False).only(
+            'id', 'sender', 'content', 'timestamp'
+        ).select_related('sender')
 
 
-    parent_message = models.ForeignKey(
+
+objects = models.Manager()  # Default manager
+unread = UnreadMessagesManager()
+
+
+parent_message = models.ForeignKey(
         'self',
         null=True,
         blank=True,
@@ -24,7 +35,7 @@ class Message(models.Model):
         on_delete=models.CASCADE
     )
 
-    def __str__(self):
+def __str__(self):
         return f"From {self.sender.username} to {self.receiver.username} to {self.content[:30]} at {self.timestamp}"
 
 

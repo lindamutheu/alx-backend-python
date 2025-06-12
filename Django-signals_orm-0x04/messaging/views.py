@@ -88,3 +88,10 @@ def send_message(request):
             return redirect('inbox')  # or wherever your redirect goes
 
     return render(request, 'messaging/send_message.html')
+
+@login_required
+def unread_inbox(request):
+    unread_messages = Message.unread.for_user(request.user)
+    return render(request, 'messaging/unread_inbox.html', {
+        'unread_messages': unread_messages
+    })
