@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 from .models import Message
+from django.db.models import Prefetch
 from .utils import get_threaded_replies
 
 @login_required
@@ -28,3 +29,62 @@ def message_detail(request, message_id):
         'root': root_message,
         'thread': thread
     })
+
+# Recursive function to fetch replies using ORM
+def get_threaded_replies(message):
+    replies = (
+        message.replies
+        .select_related('sender', 'receiver')
+        .prefetch_related('replies')
+        .all()
+    )
+    return [
+        {
+            'message': reply,
+            'replies': get_threaded_replies(reply)
+        }
+        for reply in replies
+    ]
+
+@login_required
+def message_detail(request, message_id):
+    # Root message with select_related and prefetch_related
+    root_message = get_object_or_404(
+        Message.objects.select_related('sender', 'receiver', 'parent_message')
+        .prefetch_related(
+            Prefetch('replies', queryset=Message.objects.select_related('sender', 'receiver'))
+        ),
+        id=message_id
+    )
+
+    # If viewing a reply, get the thread's root
+    if root_message.parent_message:
+        root_message = root_message.parent_message
+
+    thread = get_threaded_replies(root_message)
+
+    return render(request, 'messaging/message_detail.html', {
+        'root': root_message,
+        'thread': thread,
+    })
+
+@login_required
+def send_message(request):
+    if request.method == 'POST':
+        content = request.POST.get('content')
+        receiver_id = request.POST.get('receiver_id')
+        parent_id = request.POST.get('parent_id')
+
+        if content and receiver_id:
+            receiver = get_object_or_404(User, id=receiver_id)
+            parent = Message.objects.filter(id=parent_id).first() if parent_id else None
+
+            Message.objects.create(
+                sender=request.user,
+                receiver=receiver,
+                content=content,
+                parent_message=parent
+            )
+            return redirect('inbox')  # or wherever your redirect goes
+
+    return render(request, 'messaging/send_message.html')
