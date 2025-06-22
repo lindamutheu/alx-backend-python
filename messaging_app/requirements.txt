@@ -1,7 +1,7 @@
 aiosqlite==0.21.0
 amqp==5.3.1
-## old versionanyjson==0.3.3
-##apturl==0.5.2
+anyjson==0.3.3
+apturl==0.5.2
 asgiref==3.8.1
 asn1crypto==1.4.0
 bcrypt==3.2.0
