@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# kubctl-0x03 - Perform a rolling update with no downtime
+
+set -e
+
+DEPLOYMENT="django-blue"
+NAMESPACE="default"
+
+echo "🚀 Applying updated deployment with image v2.0..."
+kubectl apply -f messaging_app/blue_deployment.yaml
+
+echo "⏳ Monitoring rolling update status..."
+kubectl rollout status deployment/$DEPLOYMENT --namespace=$NAMESPACE
+
+echo "🔁 Testing app availability during rollout..."
+echo "(sending 10 curl requests with 1s delay to simulate user traffic)"
+
+# Port-forward the service in background
+kubectl port-forward service/messaging-service 8000:8000 &
+PORT_PID=$!
+
+# Give time for port-forwarding to establish
+sleep 5
+
+for i in {1..10}; do
+  echo -n "Request $i: "
+  curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8000/
+  sleep 1
+done
+
+# Kill background port-forward process
+kill $PORT_PID
+
+echo "✅ Verifying current running pods..."
+kubectl get pods -l app=messaging -o wide
