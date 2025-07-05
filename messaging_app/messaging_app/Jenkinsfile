@@ -1,0 +1,71 @@
+pipeline {
+    agent any
+
+    environment {
+        VENV_DIR = 'venv' // Virtual environment directory
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/YOUR_USERNAME/messaging-app.git'
+            }
+        }
+
+        stage('Set Up Python Environment') {
+            steps {
+                sh '''
+                    # Install Python and pip if not installed (optional)
+                    which python3 || sudo apt update && sudo apt install -y python3 python3-venv python3-pip
+
+                    # Create virtual environment
+                    python3 -m venv ${VENV_DIR}
+
+                    # Activate virtual environment
+                    . ${VENV_DIR}/bin/activate
+
+                    # Upgrade pip and install dependencies
+                    pip install --upgrade pip
+                    pip install -r requirements.txt pytest pytest-html
+                '''
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh '''
+                    # Activate virtual environment
+                    . ${VENV_DIR}/bin/activate
+
+                    # Run tests with pytest and generate HTML report
+                    pytest --html=pytest_report.html --self-contained-html
+                '''
+            }
+        }
+
+        stage('Publish Test Report') {
+            steps {
+                publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: '.',
+                    reportFiles: 'pytest_report.html',
+                    reportName: 'Pytest HTML Report'
+                ])
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Pipeline finished."
+        }
+        success {
+            echo "✅ Tests passed and report generated."
+        }
+        failure {
+            echo "❌ Tests failed! Check the report for details."
+        }
+    }
+}
