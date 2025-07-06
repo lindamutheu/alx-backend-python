@@ -8,14 +8,16 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/YOUR_USERNAME/messaging-app.git'
+                git branch: 'main',
+                    credentialsId: 'github-credentials',
+                    url: 'https://github.com/linda mutheu/messaging_app.git'
             }
         }
 
         stage('Set Up Python Environment') {
             steps {
                 sh '''
-                    # Install Python and pip if not installed (optional)
+                    # Install Python and pip3 if not installed
                     which python3 || sudo apt update && sudo apt install -y python3 python3-venv python3-pip
 
                     # Create virtual environment
@@ -24,9 +26,9 @@ pipeline {
                     # Activate virtual environment
                     . ${VENV_DIR}/bin/activate
 
-                    # Upgrade pip and install dependencies
-                    pip install --upgrade pip
-                    pip install -r requirements.txt pytest pytest-html
+                    # Upgrade pip3 and install dependencies
+                    pip3 install --upgrade pip
+                    pip3 install -r messaging_app/requirements.txt pytest pytest-html
                 '''
             }
         }
@@ -34,11 +36,8 @@ pipeline {
         stage('Run Tests') {
             steps {
                 sh '''
-                    # Activate virtual environment
                     . ${VENV_DIR}/bin/activate
-
-                    # Run tests with pytest and generate HTML report
-                    pytest --html=pytest_report.html --self-contained-html
+                    pytest messaging_app/tests --html=pytest_report.html --self-contained-html
                 '''
             }
         }
