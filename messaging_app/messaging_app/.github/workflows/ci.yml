@@ -48,6 +48,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r messaging_app/requirements.txt
 
+
+          - name: ✅ Run Linting (flake8)
+          run: |
+          echo "Running flake8 lint checks..."
+          flake8 messaging_app --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 messaging_app --count --exit-zero --max-complexity=10 --max-line-length=120 --statistics
+
       - name: ⚙️ Run Django migrations
         run: |
           python messaging_app/manage.py migrate
@@ -55,3 +62,19 @@ jobs:
       - name: 🧪 Run Tests
         run: |
           python messaging_app/manage.py test
+
+
+      - name: 🧪 Run Tests with Coverage
+        run: |
+          coverage run --source=messaging_app manage.py test
+          coverage report
+          coverage html
+
+      - name: 📤 Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-coverage-report
+          path: htmlcov/
+
+    # Optional: fail build if linting or tests fail
+    continue-on-error: false
