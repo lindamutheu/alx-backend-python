@@ -17,5 +17,10 @@ def edit_message(request, pk):
             message.edited_by = request.user
             message.save()
         return redirect('message_detail', pk=pk)
+    
+
 
     return render(request, 'messaging/edit_message.html', {'message': message})
+
+# Efficiently fetch a message and its immediate replies
+message = Message.objects.select_related('sender', 'receiver').prefetch_related('replies').get(pk=some_id)
